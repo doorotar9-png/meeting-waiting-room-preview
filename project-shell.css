@@ -1,0 +1,17 @@
+.meeting-filter-heading { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.meeting-filter-heading .sh-filter-title { padding-right: 0; }
+.meeting-filter-heading .meeting-switch { margin-right: 13px; flex: none; }
+.meeting-step-switches { padding: 4px 14px 2px; }
+.sh-radio input:checked { border: 1px solid var(--pick); box-shadow: inset 0 0 0 1px var(--panel); }
+.meeting-switch { --switch-width: 24px; --switch-height: 16px; --switch-thumb: 12px; --switch-inset: 2px; display: flex; align-items: center; gap: 6px; min-height: 28px; color: var(--off); font-size: 14px; line-height: 20px; cursor: pointer; }
+.meeting-switch--small { --switch-width: 20px; --switch-height: 12px; --switch-thumb: 10px; --switch-inset: 1px; min-height: 24px; }
+.meeting-switch[hidden] { display: none; }
+.meeting-switch input { appearance: none; flex: 0 0 var(--switch-width); width: var(--switch-width); height: var(--switch-height); margin: 0; border: 0; border-radius: 12px; background: var(--off-ring); position: relative; cursor: inherit; }
+.meeting-switch input::after { content: ''; position: absolute; width: var(--switch-thumb); height: var(--switch-thumb); top: var(--switch-inset); left: var(--switch-inset); border-radius: 50%; background: var(--panel); transition: transform .15s; }
+.meeting-switch input:checked { background: var(--pick); }
+.meeting-switch input:checked::after { transform: translateX(calc(var(--switch-width) - var(--switch-thumb) - 2 * var(--switch-inset))); }
+.meeting-switch input:focus-visible { outline: 2px solid var(--pick-ring); outline-offset: 2px; }
+.meeting-switch:has(input:checked), .meeting-switch:hover { color: var(--ink); }
+.meeting-timer-control { padding: 8px 7px 10px; }
+.meeting-timer-button { box-sizing: border-box; width: 100%; margin: 0; padding: 0; appearance: none; }
+.meeting-timer-button:focus-visible { outline: 2px solid var(--primary_color); outline-offset: 2px; }

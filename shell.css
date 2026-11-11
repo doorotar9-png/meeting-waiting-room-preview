@@ -1,0 +1,82 @@
+/* Оболочка сценариев: стили. Шаблон — shell.html. */
+:root {
+  --bg: #eef1f5;
+  --panel: #ffffff;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --faint: #94a3b8;
+  --line: #e2e8f0;
+  --accent: #0f172a;
+  --now: #2563eb;
+  /* панель сценария — по макету владельца */
+  --pick: #f47a3c;
+  --pick-ring: #f9b995;
+  --off: #8e98ad;
+  --off-ring: #c9ced8;
+  --well: #f1f2f4;
+  --pill: #1d2433;
+  --panel-width: 300px;
+  --panel-gap: 20px;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  display: grid;
+  grid-template-columns: max-content var(--panel-width);
+  gap: var(--panel-gap);
+  height: 100dvh;
+  overflow: hidden;
+  font: 13px/1.4 Inter, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+/* Размер продукта выбран чипом; рамка вписывает его в доступное место. */
+.sh-stage { min-width: 0; min-height: 0; }
+.sh-frame { position: relative; overflow: hidden; box-shadow: 0 2px 12px rgba(15, 23, 42, .18); background: #202327; }
+.sh-frame iframe { position: absolute; left: 0; top: 0; border: 0; transform-origin: 0 0; }
+.sh-frame iframe.sh-preparing-frame { opacity: 0; pointer-events: none; }
+.sh-frame[aria-busy='true'] > #window { pointer-events: none; }
+.sh-transition-error { position: absolute; z-index: 1; left: 12px; right: 12px; bottom: 12px; padding: 10px; color: var(--ink); background: var(--panel); }
+.sh-transition-error button { color: var(--now); font: inherit; cursor: pointer; }
+
+/* панель */
+.sh-panel { position: static; display: flex; flex-direction: column; width: var(--panel-width); height: 100%; max-width: none; max-height: none; min-height: 0; margin: 0; padding: 0; color: var(--ink); font: inherit; background: var(--panel); border: 0; border-left: 1px solid var(--line); }
+.sh-panel-slim { overflow-y: auto; }
+.sh-size-chip { display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 20px; padding: 0; border: 0; border-radius: 10px; background: var(--well); color: var(--off); font: inherit; cursor: pointer; }
+.sh-size-chip-custom { width: auto; padding: 0 10px; }
+.sh-size-chip:hover { color: var(--ink); }
+.sh-size-chip[aria-pressed='true'] { background: var(--pill); color: var(--panel); }
+.sh-size-chip:focus-visible { outline: 2px solid var(--pick); outline-offset: 2px; }
+.sh-head { padding: 16px 20px 12px; border-bottom: 1px solid var(--line); }
+.sh-title { display: flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 600; }
+.sh-badge { padding: 1px 7px; border-radius: 5px; background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; }
+.sh-story { margin: 6px 0 0; color: var(--muted); font-size: 12px; }
+
+/* фильтры сценария: сценарий → доступ вызова → шаг */
+.sh-device { padding: 8px 7px 10px; }
+.sh-device-row { display: flex; align-items: center; gap: 6px; }
+.sh-device-size, .sh-custom-size { height: 18px; margin: 8px 0 0 6px; color: var(--off); font-size: 12px; line-height: 18px; }
+.sh-custom-size { display: flex; align-items: center; gap: 2px; }
+.sh-size-input { width: 5ch; height: 18px; padding: 0; border: 0; border-bottom: 1px solid var(--off-ring); border-radius: 0; background: transparent; color: var(--ink); font: inherit; }
+.sh-size-input::placeholder { color: var(--off); opacity: 1; }
+.sh-size-input:focus-visible { outline: none; border-bottom-color: var(--pick); }
+.sh-size-input[aria-invalid='true'] { border-color: var(--pick); }
+.sh-size-error { margin: 6px 0 0 6px; color: var(--muted); font-size: 12px; }
+.sh-filters { margin: 0 1px; padding-bottom: 6px; border-radius: 8px; background: var(--well); }
+.sh-filter-title { margin: 0; padding: 8px 13px 5px; font-size: 14px; font-weight: 400; line-height: 17px; text-transform: uppercase; }
+.sh-filter-list { margin: 0 6px; padding: 6px 10px; border-radius: 8px; background: var(--panel); }
+.sh-radio { display: flex; align-items: center; gap: 6px; min-height: 24px; color: var(--off); font-size: 14px; cursor: pointer; }
+.sh-radio:hover { color: var(--ink); }
+.sh-radio input { flex-shrink: 0; width: 12px; height: 12px; margin: 0; border: 1px solid var(--off-ring); border-radius: 50%; background: var(--panel); appearance: none; cursor: pointer; }
+.sh-radio input:checked { border: 2px solid var(--pick-ring); background: var(--pick); }
+.sh-radio input:focus-visible { outline: 2px solid var(--pick); outline-offset: 2px; }
+.sh-radio:has(input:checked) { color: var(--ink); }
+.sh-note { margin: 0; color: var(--off); font-size: 13px; line-height: 18px; }
+.sh-note + .sh-note { margin-top: 6px; }
+/* выпадающий список уровня: стрелка — рамкой псевдоэлемента, цвет из токена */
+.sh-select { position: relative; display: block; }
+.sh-select select { width: 100%; height: 28px; margin: 2px 0; padding: 0 26px 0 8px; border: 1px solid var(--off-ring); border-radius: 6px; background: var(--panel); color: var(--ink); font: inherit; font-size: 14px; appearance: none; cursor: pointer; }
+.sh-select select:hover { border-color: var(--off); }
+.sh-select select:focus-visible { outline: none; border-color: var(--ink); }
+.sh-select::after { content: ''; position: absolute; top: 50%; right: 11px; width: 6px; height: 6px; border: solid var(--off); border-width: 0 1.5px 1.5px 0; transform: translateY(-70%) rotate(45deg); pointer-events: none; }

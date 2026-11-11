@@ -1,0 +1,82 @@
+<!doctype html><html lang="ru" class="controls_theme-default"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Окно звонка</title><link rel="stylesheet" href="/meeting-waiting-room-preview/assets/styles.css"></head><body class="controls_theme-default__darkv2">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script id="prototype-focus-priority">
+  (() => {
+    const panelHasFocus = () => {
+      try {
+        if (!window.frameElement) return false;
+        const parentDocument = window.parent.document;
+        return !!parentDocument.getElementById('panel')?.contains(parentDocument.activeElement);
+      } catch (_) {
+        return false;
+      }
+    };
+    const elementFocus = HTMLElement.prototype.focus;
+    HTMLElement.prototype.focus = function (...args) {
+      if (!panelHasFocus()) return elementFocus.apply(this, args);
+    };
+    const windowFocus = window.focus;
+    window.focus = function (...args) {
+      if (!panelHasFocus()) return windowFocus.apply(this, args);
+    };
+  })();
+</script>
+
+
+<script>
+  window.wsConfig = window.wsConfig || { compatible: false, logLevel: 'error' };
+</script>
+
+
+<script>
+  document.documentElement.classList.toggle('ws-is-hover', !['phone', 'tablet'].includes(window.frameElement?.dataset.device));
+</script>
+
+
+<div id="vc-root-beeps"></div>
+
+
+<script>
+  window.BroadcastChannel = class {
+    constructor(name) {
+      this.name = name;
+      this.onmessage = null;
+      this.onmessageerror = null;
+    }
+    postMessage() {}
+    close() {}
+    addEventListener() {}
+    removeEventListener() {}
+    dispatchEvent() {
+      return true;
+    }
+  };
+</script>
+<div id="prototype-loader" class="sb-preparing-story sb-wrapper" style="display:flex"><div class="sb-loader"></div></div><div id="prototype-root"></div><script defer src="/meeting-waiting-room-preview/assets/player.js"></script></body></html>

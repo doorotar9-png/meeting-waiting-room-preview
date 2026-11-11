@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Комната ожидания совещания</title>
+  <link rel="stylesheet" href="shell.css">
+  <link rel="stylesheet" href="panel-platform.css">
+  <link rel="stylesheet" href="project-shell.css">
+</head>
+<body class="ws-is-hover">
+  <main class="sh-stage" id="stage">
+    <div class="sh-frame" id="frame"><iframe id="window" title="Комната ожидания и вход в совещание" allow="autoplay; fullscreen" allowfullscreen></iframe></div>
+  </main>
+  <aside id="panel" class="sh-panel sh-panel-slim" aria-label="Настройки сценария"></aside>
+  <script id="meeting-steps" type="application/json">{"employee":{"id":"scenarios--a-3","variant":"waiting-join","steps":[{"название":"Комната ожидания","ход":0,"вход":2},{"название":"Присоединяюсь","ход":2,"вход":3},{"название":"В комнате совещания","ход":3,"вход":6}],"panelSteps":[{"name":"Комната ожидания","index":0},{"name":"Начало встречи","index":1},{"name":"В комнате звонка","index":2}]},"guest":{"id":"scenarios--h-4","variant":"first","steps":[{"название":"Комната ожидания","ход":0,"вход":2},{"название":"Разрешаю устройства","ход":2,"вход":3},{"название":"Представляюсь","ход":4,"вход":5},{"название":"Называюсь и вхожу","ход":5,"вход":6},{"название":"В комнате совещания","ход":6,"вход":9}],"panelSteps":[{"name":"Комната ожидания","index":0},{"name":"Начало встречи","index":3},{"name":"В комнате звонка","index":4}]}}</script>
+  <script src="shell-common.js"></script>
+  <script src="shell-transition.js"></script>
+  <script src="shell.js"></script>
+</body>
+</html>
