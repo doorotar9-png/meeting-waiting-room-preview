@@ -5,7 +5,7 @@
 .sh-radio input:checked { border: 1px solid var(--pick); box-shadow: inset 0 0 0 1px var(--panel); }
 .meeting-switch { --switch-width: 24px; --switch-height: 16px; --switch-thumb: 12px; --switch-inset: 2px; display: flex; align-items: center; gap: 6px; min-height: 28px; color: var(--off); font-size: 14px; line-height: 20px; cursor: pointer; }
 .meeting-switch--small { --switch-width: 20px; --switch-height: 12px; --switch-thumb: 10px; --switch-inset: 1px; min-height: 24px; }
-.meeting-switch[hidden] { display: none; }
+.meeting-switch[hidden], .meeting-timer-control[hidden] { display: none; }
 .meeting-switch input { appearance: none; flex: 0 0 var(--switch-width); width: var(--switch-width); height: var(--switch-height); margin: 0; border: 0; border-radius: 12px; background: var(--off-ring); position: relative; cursor: inherit; }
 .meeting-switch input::after { content: ''; position: absolute; width: var(--switch-thumb); height: var(--switch-thumb); top: var(--switch-inset); left: var(--switch-inset); border-radius: 50%; background: var(--panel); transition: transform .15s; }
 .meeting-switch input:checked { background: var(--pick); }

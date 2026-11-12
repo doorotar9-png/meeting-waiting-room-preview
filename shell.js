@@ -55,6 +55,8 @@ function refreshStepControls() {
   панель.querySelectorAll('input[name="step"]').forEach((input, i) => { input.checked = i === selected; });
   const insetSwitch = панель.querySelector('[data-scene-insets-switch]');
   if (insetSwitch) insetSwitch.hidden = selected !== 0;
+  const timerControl = панель.querySelector('.meeting-timer-control');
+  if (timerControl) timerControl.hidden = selected !== 0;
 }
 
 function updateTimerButton() {
