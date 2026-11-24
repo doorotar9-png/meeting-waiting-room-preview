@@ -6,6 +6,7 @@ const peopleOptions = ['2', '5', '16'];
 const agendaOptions = ['empty', 'typical', 'max'];
 const roles = ['employee', 'guest'];
 const participantCardOptions = ['old', 'new'];
+const audienceOptions = ['tensor', 'external'];
 let people = peopleOptions.includes(address.get('people')) ? address.get('people') : '2';
 let role = address.get('role') === 'guest' ? 'guest' : 'employee';
 let agenda = agendaOptions.includes(address.get('agenda')) ? address.get('agenda') : 'empty';
@@ -13,6 +14,7 @@ let files = agenda !== 'empty' && address.get('files') === '1';
 let camera = address.get('camera') === 'fill' ? 'fill' : 'inset';
 let background = address.get('background') === '1';
 let participantCard = address.get('participantCard') === 'old' ? 'old' : 'new';
+let audience = address.get('audience') === 'external' ? 'external' : 'tensor';
 let step = Number(address.get('step')) || 0;
 if (!branches[role].steps[step]) step = 0;
 let openAgendaOnReady = false;
@@ -59,6 +61,8 @@ function refreshStepControls() {
   if (insetSwitch) insetSwitch.hidden = selected !== 0;
   const participantCardControl = панель.querySelector('[data-participant-card-control]');
   if (participantCardControl) participantCardControl.hidden = selected !== 0;
+  const audienceControl = панель.querySelector('[data-audience-control]');
+  if (audienceControl) audienceControl.hidden = selected !== 0;
   const timerControl = панель.querySelector('.meeting-timer-control');
   if (timerControl) timerControl.hidden = selected !== 0;
 }
@@ -88,7 +92,7 @@ if (РАЗМЕРЫ[размерОкна].id === 'custom') {
 
 function запомнить() {
   const size = РАЗМЕРЫ[размерОкна];
-  const params = new URLSearchParams({people, role, agenda, camera, participantCard, size: size.id, step: String(step)});
+  const params = new URLSearchParams({people, role, agenda, camera, participantCard, audience, size: size.id, step: String(step)});
   params.set('files', files ? '1' : '0');
   params.set('background', background ? '1' : '0');
   if (size.id === 'custom') {
@@ -108,7 +112,7 @@ function openStep(index) {
   openAgendaOnReady = false;
   const {id, variant, steps} = branches[role];
   const args = 'variant:' + variant + ';step:' + steps[index].вход + ';fill:max';
-  подготовитьОкно('frame.html?v=939858515bcf&' + new URLSearchParams({people, role, agenda, camera, participantCard, background: background ? '1' : '0', files: files ? '1' : '0', id, args}));
+  подготовитьОкно('frame.html?v=b1fbfa754462&' + new URLSearchParams({people, role, agenda, camera, participantCard, audience, background: background ? '1' : '0', files: files ? '1' : '0', id, args}));
   запомнить();
 }
 
@@ -126,6 +130,10 @@ function sendBackground() {
 
 function sendParticipantCard() {
   окно.contentWindow.postMessage({type:'meeting-participant-card', variant:participantCard}, location.origin);
+}
+
+function sendAudience() {
+  окно.contentWindow.postMessage({type:'meeting-audience', audience}, location.origin);
 }
 
 function нарисовать() {
@@ -190,6 +198,12 @@ function нарисовать() {
   const peopleControl = фильтр('Заполнение участников', 'people', ['1 на 1', 'Типовое', 'Максимальное'], peopleOptions.indexOf(people), i => {
       changePeople(i);
     });
+  const audienceControl = фильтр('Аудитория', 'audience', ['Для Тензора', 'Вне Тензора'], audienceOptions.indexOf(audience), i => {
+    audience = audienceOptions[i];
+    запомнить();
+    sendAudience();
+  });
+  audienceControl.dataset.audienceControl = '';
   const participantCardControl = фильтр('Карточка участника', 'participantCard', ['Старый вариант', 'Новый вариант'], participantCardOptions.indexOf(participantCard), i => {
     participantCard = participantCardOptions[i];
     запомнить();
@@ -213,7 +227,7 @@ function нарисовать() {
   const stepSwitches = эл('div', 'meeting-step-switches');
   stepSwitches.append(backgroundSwitch, insetSwitch);
   stepControl.append(stepSwitches);
-  filters.append(roleControl, peopleControl, participantCardControl, agendaControl, stepControl);
+  filters.append(roleControl, peopleControl, audienceControl, participantCardControl, agendaControl, stepControl);
   панель.replaceChildren(шапкаУстройства(), filters, timerControl);
   refreshStepControls();
   if (active?.name) {
@@ -255,6 +269,7 @@ window.addEventListener('message', event => {
   sendCamera();
   sendBackground();
   sendParticipantCard();
+  sendAudience();
   окно.contentWindow.postMessage({type:'meeting-countdown-status'}, location.origin);
   syncStep();
 });
