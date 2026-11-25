@@ -112,7 +112,7 @@ function openStep(index) {
   openAgendaOnReady = false;
   const {id, variant, steps} = branches[role];
   const args = 'variant:' + variant + ';step:' + steps[index].вход + ';fill:max';
-  подготовитьОкно('frame.html?v=b1fbfa754462&' + new URLSearchParams({people, role, agenda, camera, participantCard, audience, background: background ? '1' : '0', files: files ? '1' : '0', id, args}));
+  подготовитьОкно('frame.html?v=a1003905be75&' + new URLSearchParams({people, role, agenda, camera, participantCard, audience, background: background ? '1' : '0', files: files ? '1' : '0', id, args}));
   запомнить();
 }
 
